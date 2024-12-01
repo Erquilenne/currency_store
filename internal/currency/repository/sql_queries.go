@@ -1,9 +1,9 @@
 package repository
 
 const getDates = `
-        SELECT DISTINCT DATE(time)
+        SELECT DISTINCT time
         FROM currency
-        ORDER BY DATE(time) DESC
+        ORDER BY time DESC
     `
 
 const getByDate = `

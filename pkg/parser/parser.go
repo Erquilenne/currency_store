@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -74,15 +75,16 @@ func ParseCurrencies() ([]models.Currency, error) {
 
 	var currencies []models.Currency
 	for _, item := range response.Data {
+		currencyCode := strings.ToLower(item.CurrencyCode)
 		for _, rateByClientType := range item.RateByClientType {
 			for _, ratesByType := range rateByClientType.RatesByType {
 				currencies = append(currencies, models.Currency{
-					Currency: item.CurrencyCode,
+					Currency: currencyCode,
 					Type:     "buy",
 					Value:    ratesByType.LastActualRate.Buy.OriginalValue,
 				})
 				currencies = append(currencies, models.Currency{
-					Currency: item.CurrencyCode,
+					Currency: currencyCode,
 					Type:     "sell",
 					Value:    ratesByType.LastActualRate.Sell.OriginalValue,
 				})

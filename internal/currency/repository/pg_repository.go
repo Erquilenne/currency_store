@@ -2,6 +2,7 @@ package repository
 
 import (
 	"currency/internal/models"
+	"fmt"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -18,6 +19,7 @@ func NewCurrencyRepository(db *sqlx.DB) *currencyRepo {
 func (r *currencyRepo) GetDates() ([]time.Time, error) {
 	var dates []time.Time
 	err := r.db.Select(&dates, getDates)
+	fmt.Println(dates)
 	return dates, err
 }
 

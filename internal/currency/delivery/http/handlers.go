@@ -5,7 +5,6 @@ import (
 	"currency/pkg/logger"
 	"currency/pkg/parser"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -22,7 +21,7 @@ func NewCurrencyHandler(repo currency.Repository, logger logger.Logger) currency
 	}
 }
 
-func (h *currencyHandler) GetList(w http.ResponseWriter, r *http.Request) {
+func (h *currencyHandler) GetDates(w http.ResponseWriter, r *http.Request) {
 	dates, err := h.repo.GetDates()
 	if err != nil {
 		h.logger.Error("GetList error: ", err)
@@ -34,11 +33,11 @@ func (h *currencyHandler) GetList(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(dates)
 }
 
-func (h *currencyHandler) GetByTime(w http.ResponseWriter, r *http.Request) {
+func (h *currencyHandler) GetCurrency(w http.ResponseWriter, r *http.Request) {
 	dateStr := r.URL.Query().Get("date")
-	date, err := time.Parse("2006-01-02", dateStr)
+	date, err := time.Parse(time.RFC3339Nano, dateStr)
 	if err != nil {
-		http.Error(w, "Invalid date format. Use YYYY-MM-DD", http.StatusBadRequest)
+		http.Error(w, "Invalid date format. Use RFC3339Nano (e.g., 2006-01-02T15:04:05.999999Z)", http.StatusBadRequest)
 		return
 	}
 
@@ -55,7 +54,6 @@ func (h *currencyHandler) GetByTime(w http.ResponseWriter, r *http.Request) {
 
 func (h *currencyHandler) GetActual(w http.ResponseWriter, r *http.Request) {
 	currencies, err := parser.ParseCurrencies()
-	fmt.Println(currencies)
 	if err != nil {
 		h.logger.Error("Parser error: ", err)
 		http.Error(w, "Failed to get actual rates", http.StatusInternalServerError)

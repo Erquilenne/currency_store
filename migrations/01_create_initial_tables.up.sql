@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS currency (
     value DECIMAL(10,2) NOT NULL,
     
     CONSTRAINT currency_type_check CHECK (type IN ('buy', 'sell')),
-    CONSTRAINT currency_code_check CHECK (currency IN ('USD', 'EUR'))
+    CONSTRAINT currency_code_check CHECK (currency IN ('usd', 'eur'))
 );
 
 CREATE INDEX idx_currency_time ON currency(time);
