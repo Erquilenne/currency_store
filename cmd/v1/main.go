@@ -1,13 +1,8 @@
-// @title           Music Library API
-// @version         1.0
-// @description     API Server for Music Library Application
-// @host      localhost:5000
-// @BasePath  /api/v1
-
 package main
 
 import (
 	"currency/config"
+	_ "currency/docs" // Import swagger docs
 	"currency/internal/server"
 	"currency/pkg/db/migrations"
 	"currency/pkg/db/postgres"
@@ -16,6 +11,11 @@ import (
 	"os"
 	"path/filepath"
 )
+
+// @title Currency API
+// @version 1.0
+// @description API для работы с курсами валют
+// @BasePath /api/v1
 
 func main() {
 	log.Println("Starting api server")

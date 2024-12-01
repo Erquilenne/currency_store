@@ -1,0 +1,94 @@
+basePath: /api/v1
+definitions:
+  models.Currency:
+    properties:
+      currency:
+        description: usd или eur
+        type: string
+      type:
+        description: buy или sell
+        type: string
+      value:
+        type: number
+    type: object
+info:
+  contact: {}
+  description: API для работы с курсами валют
+  title: Currency API
+  version: "1.0"
+paths:
+  /currency/actual:
+    get:
+      consumes:
+      - application/json
+      description: Парсит актуальные курсы валют и сохраняет их в базу данных
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Currency'
+            type: array
+        "500":
+          description: Failed to save rates
+          schema:
+            type: string
+      summary: Получение актуальных курсов валют
+      tags:
+      - Currency
+  /currency/currency:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает курсы валют по указанной дате и времени
+      parameters:
+      - description: Дата и время в формате RFC3339Nano (e.g., 2006-01-02T15:04:05.999999Z)
+        in: query
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Currency'
+            type: array
+        "400":
+          description: Invalid date format
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Получение курсов валют по дате и времени
+      tags:
+      - Currency
+  /currency/dates:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список уникальных дат с временем, когда были сохранены
+        курсы валют
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Получение уникальных дат с временем
+      tags:
+      - Currency
+swagger: "2.0"

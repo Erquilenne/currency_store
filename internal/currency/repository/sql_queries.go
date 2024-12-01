@@ -9,7 +9,7 @@ const getDates = `
 const getByDate = `
         SELECT currency, type, value
         FROM currency
-        WHERE DATE(time) = DATE($1)
+        WHERE time = $1
     `
 
 const save = `

@@ -12,7 +12,6 @@ type Config struct {
 	Database DatabaseConfig `mapstructure:"database"`
 	Logger   Logger         `mapstructure:"logger"`
 	Server   ServerConfig   `mapstructure:"server"`
-	MusicApi MusicApiConfig `mapstructure:"music_api"`
 }
 
 type DatabaseConfig struct {

@@ -20,8 +20,5 @@
       "write_timeout": 5,
       "port": ":5000",
       "debug": false
-    },
-    "music_api": {
-      "url": "http://api.example.com"
     }
 }
