@@ -3,7 +3,7 @@ get, store currencies and get list of currencies
 
 ### Install
 
-1. go mod tidy
+1. go build
 2. make docker_build
 or
 make docker_up
